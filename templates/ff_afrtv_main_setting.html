@@ -15,6 +15,10 @@
   <div class="tab-content" id="nav-tabContent">
     {{ macros.m_tab_content_start('normal', true) }}
     {{ macros.info_text_go('hls_playback', 'Native HLS Playback', value=arg['hls_playback'], desc=['웹에서 사용시 크롬확장프로그램 설치하세요']) }}
+    {{ macros.m_hr() }}
+    {{ macros.setting_checkbox('use_top', '실시간 북적북적 TOP20', value=arg['use_top']) }}
+    {{ macros.setting_checkbox('use_user', '유저들이 밀어주는 방송', value=arg['use_user']) }}
+    {{ macros.setting_checkbox('use_hot', '실시간 핫이슈', value=arg['use_hot']) }}
     {{ macros.setting_select('use_quality', '화질', [['1920x1080','FHD'], ['1280x720','HD'], ['960x540', 'SD']],
     col='3', value=arg['use_quality'])}}
     {{ macros.setting_radio_with_value('streaming_type', '스트리밍 타입', [['redirect', 'Redirect'],['direct', 'Direct'] , ['proxy',

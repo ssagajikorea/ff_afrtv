@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+from urllib.parse import parse_qs, urlparse
 from tool import ToolUtil
 from flask import Response
 from .setup import *
@@ -29,6 +30,9 @@ class ModuleMain(PluginModuleBase):
             "yaml_path": "",
             "use_quality": "1920x1080",
             "streaming_type": "redirect",
+            "use_top": "True",
+            "use_user": "False",
+            "use_hot": "False",
         }
 
     def process_menu(self, sub, req):
@@ -43,13 +47,13 @@ class ModuleMain(PluginModuleBase):
 
     def process_command(self, command, arg1, arg2, arg3, req):
         updated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        streaming_type = P.ModelSetting.get("streaming_type")
 
         if command == "broad_list":
-            streaming_type = P.ModelSetting.get("streaming_type")
             return jsonify({"list": AFRTV_Handler.ch_list(), "updated_at": updated_at, "streaming_type": streaming_type})
         elif command == "play_url":
-            url = ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={arg1}&streamer={arg3}")
-            ret = {"ret": "success", "data": url, "title": arg2}
+            url = arg1
+            ret = {"ret": "success", "data": url}
         return jsonify(ret)
 
     def process_api(self, sub, req):
